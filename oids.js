@@ -2548,5 +2548,9 @@ return {
 "1.3.6.1.4.1.40869.1.1.22.3": { "d": "TWCA EV policy", "c": "TWCA Root Certification Authority" },
 "2.16.840.1.113733.1.7.23.6": { "d": "VeriSign EV policy", "c": "VeriSign Class 3 Public Primary Certification Authority" },
 "2.16.840.1.114171.500.9": { "d": "Wells Fargo EV policy", "c": "Wells Fargo WellsSecure Public Root Certificate Authority" },
+"1.3.6.1.4.1.311.2.2.30": { "d": "NEGOEX", "c": "Negotiation Extended mechanism within Simple and Protected generic security services application program interface Negotiation mechanism" },
+"1.3.6.1.4.1.311.2.2.10": { "d": "NTLM", "c": "New Technology Local area network Manager" },
+"1.3.6.1.5.5.2": { "d": "SNEGO", "c": "Simple and protected mechanism NEGOtiation protocol" },
+"1.3.6.1.5.2.7": { "d": "GSS PKU2U mechanism", "c": "GSS PKU2U mechanism" },
 "END": ""
 };});

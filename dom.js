@@ -62,7 +62,25 @@ ASN1.prototype.toDOM = function (spaces) {
     var node = DOM.tag("div", "node");
     node.asn1 = this;
     var head = DOM.tag("div", "head");
-    head.innerHTML = "<span class='spaces'>" + spaces + "</span>" + this.typeName().replace(/_/g, " ");
+
+    const spacesComponent = DOM.tag("span", "spaces");
+    spacesComponent.innerText = spaces;
+
+    const name = DOM.tag("span", "");
+    name.innerText = this.typeName().replace(/_/g, " ") + ' ';
+
+    const copy = DOM.tag("span", "");
+    copy.setAttribute('id', 'butCopy');
+    copy.innerText = 'copy';
+    copy.onclick = () => navigator.clipboard.writeText(this.toHexString());
+
+    const headTitle = DOM.tag("span", "");
+    headTitle.appendChild(name);
+    headTitle.appendChild(copy);
+
+    head.appendChild(spacesComponent);
+    head.appendChild(headTitle);
+
     var content = this.content(contentLength);
     if (content !== null) {
         var preview = DOM.tag("span", "preview"),

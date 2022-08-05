@@ -101,3 +101,16 @@ html, body {
 #dump .hexCurrent .hex { background-color: #A0A0A0; }
 #dump .hexCurrent .dlen { color: #004040; }
 #file { display: none; }
+
+.head:hover #butCopy {
+    display: inline;
+}
+#butCopy {
+    cursor: pointer;
+    display: none;
+    color: #808080;
+}
+#butCopy:hover {
+    color: darkgreen;
+    font-weight: bold;
+}
