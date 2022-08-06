@@ -1,6 +1,6 @@
 asn1js
 
-![deploy](https://github.com/TheBestTvarynka/bytes-formatter/actions/workflows/github-actions.yml/badge.svg)
+![deploy](https://github.com/TheBestTvarynka/asn1js/actions/workflows/github-actions.yml/badge.svg)
 
 ======
 
