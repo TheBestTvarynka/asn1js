@@ -144,7 +144,10 @@ ASN1.prototype.toDOM = function (spaces) {
             sub.appendChild(this.sub[i].toDOM(spaces));
     }
     node.appendChild(sub);
-    head.onclick = function () {
+    head.onclick = function (event) {
+        if (event.target.id === "butCopy") {
+            return;
+        }
         node.className = (node.className == "node collapsed") ? "node" : "node collapsed";
     };
     return node;
