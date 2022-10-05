@@ -7,15 +7,28 @@
     "type": "git",
     "url": "git+https://github.com/lapo-luchini/asn1js.git"
   },
-  "keywords": [ "asn1", "ber", "der", "pem" ],
+  "keywords": [
+    "asn1",
+    "ber",
+    "der",
+    "pem"
+  ],
   "author": "Lapo Luchini <lapo@lapo.it>",
   "license": "ISC",
-  "bugs": { "url": "https://github.com/lapo-luchini/asn1js/issues" },
+  "bugs": {
+    "url": "https://github.com/lapo-luchini/asn1js/issues"
+  },
   "homepage": "https://lapo.it/asn1js/",
-  "files": [ "asn1.js", "base64.js", "hex.js", "int10.js", "oids.js" ],
-  "scripts" : {
-    "lint" : "npx eslint asn1.js base64.js hex.js int10.js oids.js parseRFC.js dumpASN1.js",
-    "test" : "node test"
+  "files": [
+    "asn1.js",
+    "base64.js",
+    "hex.js",
+    "int10.js",
+    "oids.js"
+  ],
+  "scripts": {
+    "lint": "npx eslint asn1.js base64.js hex.js int10.js oids.js parseRFC.js dumpASN1.js",
+    "test": "node test"
   },
   "eslintConfig": {
     "env": {
@@ -23,29 +36,64 @@
       "browser": true,
       "node": true
     },
-    "extends": [ "eslint:recommended" ],
+    "extends": [
+      "eslint:recommended"
+    ],
     "globals": {
       "Uint8Array": "readonly"
     },
     "rules": {
-      "strict": [ "error", "function" ],
-      "indent": [ "error", 4, { "ignoredNodes": [ "Program > ExpressionStatement > CallExpression > FunctionExpression > BlockStatement > ExpressionStatement[directive='use strict']:first-child" ] } ],
-      "linebreak-style": [ "error", "unix" ],
-      "semi": [ "warn", "always" ],
-      "comma-dangle": [ "error", "never" ]
+      "strict": [
+        "error",
+        "function"
+      ],
+      "indent": [
+        "error",
+        4,
+        {
+          "ignoredNodes": [
+            "Program > ExpressionStatement > CallExpression > FunctionExpression > BlockStatement > ExpressionStatement[directive='use strict']:first-child"
+          ]
+        }
+      ],
+      "linebreak-style": [
+        "error",
+        "unix"
+      ],
+      "semi": [
+        "warn",
+        "always"
+      ],
+      "comma-dangle": [
+        "error",
+        "never"
+      ]
     },
     "overrides": [
       {
-        "files": [ "test.js", "parseRFC.js", "dumpASN1.js" ],
+        "files": [
+          "test.js",
+          "parseRFC.js",
+          "dumpASN1.js"
+        ],
         "parserOptions": {
           "ecmaVersion": 2020
         },
         "rules": {
-          "strict": [ "error", "global" ],
-          "comma-dangle": [ "error", "always-multiline" ]
+          "strict": [
+            "error",
+            "global"
+          ],
+          "comma-dangle": [
+            "error",
+            "always-multiline"
+          ]
         }
-      }, {
-        "files": [ "oids.js" ],
+      },
+      {
+        "files": [
+          "oids.js"
+        ],
         "rules": {
           "indent": "off"
         }

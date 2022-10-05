@@ -5,22 +5,22 @@ const
     fs = require('fs'),
     patches = { // to fix some known RFCs' ASN.1 syntax errors
         0: [
-            [ /\n\n[A-Z].*\n\f\n[A-Z].*\n\n/g, '' ], // page change
+            [/\n\n[A-Z].*\n\f\n[A-Z].*\n\n/g, ''], // page change
         ],
         2459: [ // currently unsupported
-            [ 'videotex (8) } (0..ub-integer-options)', 'videotex (8) }' ],
-            [ /OBJECT IDENTIFIER \( id-qt-cps \| id-qt-unotice \)/g, 'OBJECT IDENTIFIER' ],
-            [ /SIGNED \{ (SEQUENCE \{[^}]+\})\s*\}/g, 'SEQUENCE { toBeSigned $1, algorithm AlgorithmIdentifier, signature BIT STRING }' ],
-            [ /EXTENSION\.&[^,]+/g, 'OBJECT IDENTIFIER'],
+            ['videotex (8) } (0..ub-integer-options)', 'videotex (8) }'],
+            [/OBJECT IDENTIFIER \( id-qt-cps \| id-qt-unotice \)/g, 'OBJECT IDENTIFIER'],
+            [/SIGNED \{ (SEQUENCE \{[^}]+\})\s*\}/g, 'SEQUENCE { toBeSigned $1, algorithm AlgorithmIdentifier, signature BIT STRING }'],
+            [/EXTENSION\.&[^,]+/g, 'OBJECT IDENTIFIER'],
         ],
         3161: [ // actual syntax errors
-            [ /--.*}/g, '}' ],
-            [ /^( +)--.*\n(?:\1 .*\n)+/mg, '' ],
-            [ /addInfoNotAvailable \(17\)/g, '$&,' ],
+            [/--.*}/g, '}'],
+            [/^( +)--.*\n(?:\1 .*\n)+/mg, ''],
+            [/addInfoNotAvailable \(17\)/g, '$&,'],
         ],
         5280: [ // currently unsupported
-            [ 'videotex     (8) } (0..ub-integer-options)', 'videotex     (8) }' ],
-            [ /OBJECT IDENTIFIER \( id-qt-cps \| id-qt-unotice \)/g, 'OBJECT IDENTIFIER' ],
+            ['videotex     (8) } (0..ub-integer-options)', 'videotex     (8) }'],
+            [/OBJECT IDENTIFIER \( id-qt-cps \| id-qt-unotice \)/g, 'OBJECT IDENTIFIER'],
         ],
     };
 
@@ -42,8 +42,8 @@ Parser.prototype.getChar = function (pos) {
 Parser.prototype.exception = function (s, pos) {
     if (pos == undefined) pos = this.pos;
     let from = Math.max(pos - 30, this.start);
-    let to   = Math.min(pos + 30, this.enc.length);
-    let ctx  = '';
+    let to = Math.min(pos + 30, this.enc.length);
+    let ctx = '';
     let arrow = '';
     let i = from;
     for (; i < pos; ++i) {
@@ -159,76 +159,76 @@ Parser.prototype.parseBuiltinType = function () {
     // console.log('[debug] parseType = ' + x.name);
     try {
         switch (x.name) {
-        case 'ANY':
-            if (this.tryToken('DEFINED BY'))
-                x.definedBy = this.parseIdentifier();
-            break;
-        case 'BOOLEAN':
-        case 'OCTET STRING':
-        case 'OBJECT IDENTIFIER':
-            break;
-        case 'CHOICE':
-            x.content = this.parseElementTypeList();
-            break;
-        case 'SEQUENCE':
-        case 'SET':
-            if (this.peekChar() == '{') {
+            case 'ANY':
+                if (this.tryToken('DEFINED BY'))
+                    x.definedBy = this.parseIdentifier();
+                break;
+            case 'BOOLEAN':
+            case 'OCTET STRING':
+            case 'OBJECT IDENTIFIER':
+                break;
+            case 'CHOICE':
                 x.content = this.parseElementTypeList();
-            } else {
-                x.typeOf = 1;
-                if (this.tryToken('SIZE')) {
-                    this.expectToken('(');
-                    x.size = this.parseRange();
+                break;
+            case 'SEQUENCE':
+            case 'SET':
+                if (this.peekChar() == '{') {
+                    x.content = this.parseElementTypeList();
+                } else {
+                    x.typeOf = 1;
+                    if (this.tryToken('SIZE')) {
+                        this.expectToken('(');
+                        x.size = this.parseRange();
+                        this.expectToken(')');
+                    }
+                    this.expectToken('OF');
+                    x.content = [this.parseType()];
+                }
+                break;
+            case 'INTEGER':
+                if (this.tryToken('(')) {
+                    x.range = this.parseRange();
                     this.expectToken(')');
                 }
-                this.expectToken('OF');
-                x.content = [this.parseType()];
-            }
-            break;
-        case 'INTEGER':
-            if (this.tryToken('(')) {
-                x.range = this.parseRange();
-                this.expectToken(')');
-            }
             // falls through
-        case 'ENUMERATED':
-        case 'BIT STRING':
-            if (this.tryToken('{')) {
-                x.content = {};
-                do {
-                    let id = this.parseIdentifier();
-                    this.expectToken('(');
-                    let val = this.parseNumber(); //TODO: signed
-                    this.expectToken(')');
-                    x.content[id] = +val;
-                } while (this.tryToken(','));
-                this.expectToken('}');
-            }
-            break;
-        case 'BMPString':
-        case 'GeneralString':
-        case 'GraphicString':
-        case 'IA5String':
-        case 'ISO646String':
-        case 'NumericString':
-        case 'PrintableString':
-        case 'TeletexString':
-        case 'T61String':
-        case 'UniversalString':
-        case 'UTF8String':
-        case 'VideotexString':
-        case 'VisibleString':
-            if (this.tryToken('(')) {
-                if (this.tryToken('SIZE')) {
-                    this.expectToken('(');
-                    x.size = this.parseRange();
+            case 'ENUMERATED':
+            case 'BIT STRING':
+                if (this.tryToken('{')) {
+                    x.content = {};
+                    do {
+                        let id = this.parseIdentifier();
+                        this.expectToken('(');
+                        let val = this.parseNumber(); //TODO: signed
+                        this.expectToken(')');
+                        x.content[id] = +val;
+                    } while (this.tryToken(','));
+                    this.expectToken('}');
+                }
+                break;
+            case 'BMPString':
+            case 'GeneralString':
+            case 'GraphicString':
+            case 'IA5String':
+            case 'ISO646String':
+            case 'NumericString':
+            case 'PrintableString':
+            case 'TeletexString':
+            case 'T61String':
+            case 'UniversalString':
+            case 'UTF8String':
+            case 'VideotexString':
+            case 'VisibleString':
+                if (this.tryToken('(')) {
+                    if (this.tryToken('SIZE')) {
+                        this.expectToken('(');
+                        x.size = this.parseRange();
+                        this.expectToken(')');
+                    }
                     this.expectToken(')');
                 }
-                this.expectToken(')');
-            }
-            break;
-        default:
-            x.content = 'TODO:unknown';
+                break;
+            default:
+                x.content = 'TODO:unknown';
         }
     } catch (e) {
         console.log('[debug] parseBuiltinType content', e);
@@ -332,12 +332,12 @@ Parser.prototype.parseValue = function () {
     let p = this.pos;
     try {
         switch (this.parseToken()) {
-        case 'TRUE':
-            return true;
-        case 'FALSE':
-            return false;
-        case 'NULL':
-            return null;
+            case 'TRUE':
+                return true;
+            case 'FALSE':
+                return false;
+            case 'NULL':
+                return null;
         }
     } catch (e) {
         this.pos = p;
@@ -374,7 +374,7 @@ Parser.prototype.parseElementType = function () {
         x.optional = true;
     if (this.tryToken('DEFAULT'))
         x.default = this.parseValue(x.type);
-        // console.log('[debug] parseElementType 2:', x);
+    // console.log('[debug] parseElementType 2:', x);
     return x;
 };
 Parser.prototype.parseElementTypeList = function () {
